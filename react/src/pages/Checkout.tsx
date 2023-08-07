@@ -9,15 +9,15 @@ import { nanoid } from "nanoid";
 import "../App.css";
 
 const selector = "#payment-widget";
-const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
-const customerKey = "YbX2HuSlsC9uVJW6NMRMj";
+const clientKey = "test_ck_Z0RnYX2w5325E9gv6px8NeyqApQE"; // 테스트용
+const customerKey = "uihnininionoinlkmsndflkm";
 
 export function CheckoutPage() {
   const paymentWidgetRef = useRef<PaymentWidgetInstance | null>(null);
   const paymentMethodsWidgetRef = useRef<ReturnType<
     PaymentWidgetInstance["renderPaymentMethods"]
   > | null>(null);
-  const [price, setPrice] = useState(50_000);
+  const [price, setPrice] = useState(100);
 
   useEffect(() => {
     (async () => {
@@ -28,10 +28,7 @@ export function CheckoutPage() {
 
       // ------  결제위젯 렌더링 ------
       // https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods선택자-결제-금액-옵션
-      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
-        selector,
-        { value: price }
-      );
+      const paymentMethodsWidget = paymentWidget.renderPaymentMethods(selector, { value: price });
 
       // ------  이용약관 렌더링 ------
       // https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자
@@ -51,10 +48,7 @@ export function CheckoutPage() {
 
     // ------ 금액 업데이트 ------
     // https://docs.tosspayments.com/reference/widget-sdk#updateamount결제-금액
-    paymentMethodsWidget.updateAmount(
-      price,
-      paymentMethodsWidget.UPDATE_REASON.COUPON
-    );
+    paymentMethodsWidget.updateAmount(price, paymentMethodsWidget.UPDATE_REASON.COUPON);
   }, [price]);
 
   return (
@@ -66,10 +60,10 @@ export function CheckoutPage() {
           <input
             type="checkbox"
             onChange={(event) => {
-              setPrice(event.target.checked ? price - 5_000 : price + 5_000);
+              setPrice(event.target.checked ? price - 0 : price + 0);
             }}
           />
-          5,000원 할인 쿠폰 적용
+          0원 할인 쿠폰 적용
         </label>
       </div>
       <div id="payment-widget" />
@@ -81,6 +75,7 @@ export function CheckoutPage() {
           try {
             // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
             // https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
+            console.log("paymentWidget");
             await paymentWidget?.requestPayment({
               orderId: nanoid(),
               orderName: "토스 티셔츠 외 2건",

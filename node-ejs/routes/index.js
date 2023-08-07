@@ -4,7 +4,7 @@ var uuid = require("uuid").v4;
 
 var router = express.Router();
 
-var secretKey = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R";
+var secretKey = "test_sk_ODnyRpQWGrNNqnAP9zyrKwv1M9EN";
 
 router.get("/", function (req, res) {
   res.render("index", {
@@ -21,8 +21,7 @@ router.get("/success", function (req, res) {
   got
     .post("https://api.tosspayments.com/v1/payments/confirm", {
       headers: {
-        Authorization:
-          "Basic " + Buffer.from(secretKey + ":").toString("base64"),
+        Authorization: "Basic " + Buffer.from(secretKey + ":").toString("base64"),
         "Content-Type": "application/json",
       },
       json: {
